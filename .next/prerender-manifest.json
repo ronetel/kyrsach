@@ -30,6 +30,30 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/",
+      "dataRoute": "/index.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/checkout": {
       "experimentalBypassFor": [
         {
@@ -77,37 +101,13 @@
         "x-next-revalidated-tags",
         "x-next-revalidate-tag-token"
       ]
-    },
-    "/": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/",
-      "dataRoute": "/index.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
     }
   },
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "2c0ef7b0ec67c20f9a00c71155d3acd1",
-    "previewModeSigningKey": "7ddafd3cb049f085314465650c64811cbb197c92839dc52e931dd29b8cc705b9",
-    "previewModeEncryptionKey": "38ba79a910b5bc061ffc58b4b72bfbaa25be5044da5f5438c27064c69dfd30be"
+    "previewModeId": "a310aa40786df6a983ff227649a134a9",
+    "previewModeSigningKey": "47373ac4d5ffdffb943d954469bb11acc7cfdda0fca981b37af63344f141e11a",
+    "previewModeEncryptionKey": "2cb96387f5e1f804252e1bef2a926c5ecff4d3674c560e7f2837583dc3427ce2"
   }
 }
