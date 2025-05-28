@@ -18,7 +18,9 @@ export const authOptions: AuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
+        console.log('Credentials received:', credentials);
         if (!credentials) {
+          console.log('No credentials provided');
           return null;
         }
 
@@ -29,8 +31,11 @@ export const authOptions: AuthOptions = {
         });
 
         if (!findUser) {
+          console.log('User not found:', credentials.email);
           return null;
         }
+
+        console.log('User found:', findUser);
 
         const isPasswordValid = await compare(
           credentials.password,
@@ -38,10 +43,12 @@ export const authOptions: AuthOptions = {
         );
 
         if (!isPasswordValid) {
+          console.log('Invalid password for user:', credentials.email);
           return null;
         }
 
         if (!findUser.verified) {
+          console.log('User not verified:', credentials.email);
           return null;
         }
 
@@ -50,6 +57,7 @@ export const authOptions: AuthOptions = {
           process.env.JWT_SECRET || ''
         );
 
+        console.log('Authentication successful, token generated');
         return {
           id: findUser.ID_User,
           email: findUser.Email_user,
