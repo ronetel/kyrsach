@@ -63,7 +63,7 @@ export const authOptions: AuthOptions = {
           email: findUser.Email_user,
           name: findUser.Name_user,
           role: findUser.role,
-          token,
+          accessToken: token,
         };
       },
     }),
@@ -101,7 +101,9 @@ export const authOptions: AuthOptions = {
             OR: [
               {
                 provider: account?.provider,
-                providerId: account?.providerAccountId,
+                providerId: account?.providerAccountId
+                  ? String(account.providerAccountId)
+                  : null, // Преобразуем в строку
               },
               { Email_user: user.email },
             ],
@@ -115,7 +117,9 @@ export const authOptions: AuthOptions = {
             },
             data: {
               provider: account?.provider,
-              providerId: account?.providerAccountId,
+              providerId: account?.providerAccountId
+                ? String(account.providerAccountId)
+                : null, // Преобразуем в строку
             },
           });
 
@@ -145,7 +149,9 @@ export const authOptions: AuthOptions = {
             Password_user: hashSync(user.email, 10),
             verified: new Date(),
             provider: account?.provider,
-            providerId: account?.providerAccountId,
+            providerId: account?.providerAccountId
+              ? String(account.providerAccountId)
+              : null, // Преобразуем в строку
           },
         });
 
