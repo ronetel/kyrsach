@@ -69,28 +69,31 @@ export const authOptions: AuthOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: '/api/auth/signin',
+  },
   session: {
     strategy: 'jwt',
   },
   callbacks: {
     async signIn({ user, account, profile }) {
       try {
-        if (account?.provider === 'credentials' && user.id && user.token) {
-          const response = await fetch('/api/merge-cart', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              userId: Number(user.id),
-              cartToken: user.token,
-            }),
-          });
+        // if (account?.provider === 'credentials' && user.id && user.token) {
+        //   const response = await fetch('/api/merge-cart', {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //       userId: Number(user.id),
+        //       cartToken: user.token,
+        //     }),
+        //   });
 
-          if (!response.ok) {
-            console.error('Failed to merge cart:', await response.text());
-          }
-        }
+        //   if (!response.ok) {
+        //     console.error('Failed to merge cart:', await response.text());
+        //   }
+        // }
 
         if (!user.email) {
           return false;

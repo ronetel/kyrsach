@@ -8,7 +8,7 @@ export async function GET(request: Request) {
 
     if (!session?.user) {
       return NextResponse.json(
-        { message: 'Вы не авторизованы' }, 
+        { message: 'Вы не авторизованы' },
         { status: 401 }
       );
     }
@@ -28,9 +28,6 @@ export async function GET(request: Request) {
     return NextResponse.json(data);
   } catch (error) {
     console.error('[USER_GET] Server error:', error);
-    return NextResponse.json(
-      { message: 'Ошибка сервера' }, 
-      { status: 500 }
-    );
+    return NextResponse.json({ message: 'Ошибка сервера' }, { status: 500 });
   }
 }

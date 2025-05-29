@@ -5,15 +5,6 @@ import { authOptions } from '@/shered/constants/auth-options';
 
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user?.id) {
-      return NextResponse.json(
-        { message: 'Необходима авторизация' },
-        { status: 401 }
-      );
-    }
-
     const products = await prisma.products.findMany({
       include: {
         ProductItems: {

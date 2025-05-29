@@ -1,7 +1,7 @@
 /*!************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./app/global.css ***!
   \************************************************************************************************************************************************************************************************************************************************************/
-/*! tailwindcss v4.1.6 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.7 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -1766,7 +1766,7 @@
   }
   .data-\[state\=closed\]\:animate-out {
     &[data-state="closed"] {
-      animation: exit var(--tw-duration,.15s)var(--tw-ease,ease);
+      animation: exit var(--tw-animation-duration,var(--tw-duration,.15s))var(--tw-ease,ease);
     }
   }
   .data-\[state\=closed\]\:duration-300 {
@@ -1779,6 +1779,12 @@
     &[data-state="closed"] {
       --tw-exit-opacity: calc(0/100);
       --tw-exit-opacity: 0;
+    }
+  }
+  .data-\[state\=closed\]\:zoom-out-95 {
+    &[data-state="closed"] {
+      --tw-exit-scale: calc(95*1%);
+      --tw-exit-scale: .95;
     }
   }
   .data-\[state\=closed\]\:slide-out-to-bottom {
@@ -1801,14 +1807,9 @@
       --tw-exit-translate-y: -100%;
     }
   }
-  .data-\[state\=closed\]\:zoom-out-95 {
-    &[data-state="closed"] {
-      --tw-exit-scale: .95;
-    }
-  }
   .data-\[state\=open\]\:animate-in {
     &[data-state="open"] {
-      animation: enter var(--tw-duration,.15s)var(--tw-ease,ease);
+      animation: enter var(--tw-animation-duration,var(--tw-duration,.15s))var(--tw-ease,ease);
     }
   }
   .data-\[state\=open\]\:bg-accent {
@@ -1838,6 +1839,12 @@
       --tw-enter-opacity: 0;
     }
   }
+  .data-\[state\=open\]\:zoom-in-95 {
+    &[data-state="open"] {
+      --tw-enter-scale: calc(95*1%);
+      --tw-enter-scale: .95;
+    }
+  }
   .data-\[state\=open\]\:slide-in-from-bottom {
     &[data-state="open"] {
       --tw-enter-translate-y: 100%;
@@ -1856,11 +1863,6 @@
   .data-\[state\=open\]\:slide-in-from-top {
     &[data-state="open"] {
       --tw-enter-translate-y: -100%;
-    }
-  }
-  .data-\[state\=open\]\:zoom-in-95 {
-    &[data-state="open"] {
-      --tw-enter-scale: .95;
     }
   }
   .data-\[vaul-drawer-direction\=bottom\]\:inset-x-0 {

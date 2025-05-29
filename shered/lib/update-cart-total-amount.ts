@@ -2,17 +2,17 @@ import { prisma } from '../../prisma/prisma-client';
 import { CartDTO, CartItemDTO } from '../services/dto/cart.dto';
 import { calcCartItemTotalPrice } from './calc-cart-item-total-price';
 
-export const  updateCartTotalAmount = async (token?: string, userId?: number): Promise<CartDTO> => {
+export const updateCartTotalAmount = async (
+  token?: string,
+  userId?: number
+): Promise<CartDTO> => {
   if (!token && !userId) {
     throw new Error('Either token or userId must be provided');
   }
 
   const userCart = await prisma.carts.findFirst({
     where: {
-      OR: [
-        ...(token ? [{ token }] : []),
-        ...(userId ? [{ userId }] : []),
-      ],
+      OR: [...(token ? [{ token }] : []), ...(userId ? [{ userId }] : [])],
     },
     include: {
       items: {

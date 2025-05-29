@@ -6,14 +6,14 @@
           "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cronetel%5C%5CDesktop%5C%5Ceyrs%5C%5Ckyrsach%5C%5Capp%5C%5Cactions.ts%22%2C%5B%7B%22id%22%3A%22404665926b0eb47faa88578dc649392ddf51f09e1d%22%2C%22exportedName%22%3A%22updateUserInfo%22%7D%2C%7B%22id%22%3A%22406f658cc5d1e97fda553d6bd26d8968a421b2c936%22%2C%22exportedName%22%3A%22registerUser%22%7D%2C%7B%22id%22%3A%227c58da41758066a775fbb11b56e3e41b4ec309976f%22%2C%22exportedName%22%3A%22createOrder%22%7D%5D%5D%5D&__client_imported__=true!",
           "async": false
         },
-        "app/(root)/profile/page": {
+        "app/(root)/@modal/[...catchAll]/page": {
           "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cronetel%5C%5CDesktop%5C%5Ceyrs%5C%5Ckyrsach%5C%5Capp%5C%5Cactions.ts%22%2C%5B%7B%22id%22%3A%22404665926b0eb47faa88578dc649392ddf51f09e1d%22%2C%22exportedName%22%3A%22updateUserInfo%22%7D%2C%7B%22id%22%3A%22406f658cc5d1e97fda553d6bd26d8968a421b2c936%22%2C%22exportedName%22%3A%22registerUser%22%7D%2C%7B%22id%22%3A%227c58da41758066a775fbb11b56e3e41b4ec309976f%22%2C%22exportedName%22%3A%22createOrder%22%7D%5D%5D%5D&__client_imported__=true!",
           "async": false
         }
       },
       "layer": {
         "app/(root)/page": "action-browser",
-        "app/(root)/profile/page": "action-browser"
+        "app/(root)/@modal/[...catchAll]/page": "action-browser"
       }
     },
     "406f658cc5d1e97fda553d6bd26d8968a421b2c936": {
@@ -22,14 +22,14 @@
           "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cronetel%5C%5CDesktop%5C%5Ceyrs%5C%5Ckyrsach%5C%5Capp%5C%5Cactions.ts%22%2C%5B%7B%22id%22%3A%22404665926b0eb47faa88578dc649392ddf51f09e1d%22%2C%22exportedName%22%3A%22updateUserInfo%22%7D%2C%7B%22id%22%3A%22406f658cc5d1e97fda553d6bd26d8968a421b2c936%22%2C%22exportedName%22%3A%22registerUser%22%7D%2C%7B%22id%22%3A%227c58da41758066a775fbb11b56e3e41b4ec309976f%22%2C%22exportedName%22%3A%22createOrder%22%7D%5D%5D%5D&__client_imported__=true!",
           "async": false
         },
-        "app/(root)/profile/page": {
+        "app/(root)/@modal/[...catchAll]/page": {
           "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cronetel%5C%5CDesktop%5C%5Ceyrs%5C%5Ckyrsach%5C%5Capp%5C%5Cactions.ts%22%2C%5B%7B%22id%22%3A%22404665926b0eb47faa88578dc649392ddf51f09e1d%22%2C%22exportedName%22%3A%22updateUserInfo%22%7D%2C%7B%22id%22%3A%22406f658cc5d1e97fda553d6bd26d8968a421b2c936%22%2C%22exportedName%22%3A%22registerUser%22%7D%2C%7B%22id%22%3A%227c58da41758066a775fbb11b56e3e41b4ec309976f%22%2C%22exportedName%22%3A%22createOrder%22%7D%5D%5D%5D&__client_imported__=true!",
           "async": false
         }
       },
       "layer": {
         "app/(root)/page": "action-browser",
-        "app/(root)/profile/page": "action-browser"
+        "app/(root)/@modal/[...catchAll]/page": "action-browser"
       }
     },
     "7c58da41758066a775fbb11b56e3e41b4ec309976f": {
@@ -38,14 +38,14 @@
           "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cronetel%5C%5CDesktop%5C%5Ceyrs%5C%5Ckyrsach%5C%5Capp%5C%5Cactions.ts%22%2C%5B%7B%22id%22%3A%22404665926b0eb47faa88578dc649392ddf51f09e1d%22%2C%22exportedName%22%3A%22updateUserInfo%22%7D%2C%7B%22id%22%3A%22406f658cc5d1e97fda553d6bd26d8968a421b2c936%22%2C%22exportedName%22%3A%22registerUser%22%7D%2C%7B%22id%22%3A%227c58da41758066a775fbb11b56e3e41b4ec309976f%22%2C%22exportedName%22%3A%22createOrder%22%7D%5D%5D%5D&__client_imported__=true!",
           "async": false
         },
-        "app/(root)/profile/page": {
+        "app/(root)/@modal/[...catchAll]/page": {
           "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cronetel%5C%5CDesktop%5C%5Ceyrs%5C%5Ckyrsach%5C%5Capp%5C%5Cactions.ts%22%2C%5B%7B%22id%22%3A%22404665926b0eb47faa88578dc649392ddf51f09e1d%22%2C%22exportedName%22%3A%22updateUserInfo%22%7D%2C%7B%22id%22%3A%22406f658cc5d1e97fda553d6bd26d8968a421b2c936%22%2C%22exportedName%22%3A%22registerUser%22%7D%2C%7B%22id%22%3A%227c58da41758066a775fbb11b56e3e41b4ec309976f%22%2C%22exportedName%22%3A%22createOrder%22%7D%5D%5D%5D&__client_imported__=true!",
           "async": false
         }
       },
       "layer": {
         "app/(root)/page": "action-browser",
-        "app/(root)/profile/page": "action-browser"
+        "app/(root)/@modal/[...catchAll]/page": "action-browser"
       }
     }
   },
