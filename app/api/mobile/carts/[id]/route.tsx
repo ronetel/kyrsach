@@ -1,22 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/shered/constants/auth-options';
 import { prisma } from '@/prisma/prisma-client';
+import { CreateCartItemValues } from '@/shered/services/dto/cart.dto';
 import { updateCartTotalAmount } from '@/shered/lib/update-cart-total-amount';
+import jwt from 'jsonwebtoken';
+
+const verifyToken = (req: NextRequest) => {
+  const authHeader = req.headers.get('Authorization');
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return null;
+  }
+  const token = authHeader.split(' ')[1];
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || '') as {
+      id: number;
+      email: string;
+    };
+    return decoded;
+  } catch (error) {
+    return null;
+  }
+};
 
 export async function PATCH(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
-    // Проверяем, что пользователь авторизован
-    if (!session?.user?.id) {
+    const decoded = verifyToken(req);
+    if (!decoded) {
       return NextResponse.json(
-        { error: 'Необходима авторизация' },
+        { message: 'Необходима авторизация' },
         { status: 401 }
       );
     }
 
-    const userId = Number(session.user.id);
+    const userId = Number(decoded.id);
     const id = Number(new URL(req.url).pathname.split('/').pop());
     const data = (await req.json()) as { quantity: number };
 
@@ -32,7 +47,6 @@ export async function PATCH(req: NextRequest) {
       );
     }
 
-    // Проверяем, что корзина принадлежит текущему пользователю
     if (cartItem.cart.userId !== userId) {
       return NextResponse.json(
         { error: 'У вас нет доступа к этому элементу корзины' },
@@ -63,19 +77,18 @@ export async function PATCH(req: NextRequest) {
     );
   }
 }
+
 export async function DELETE(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
-    // Проверяем, что пользователь авторизован
-    if (!session?.user?.id) {
+    const decoded = verifyToken(req);
+    if (!decoded) {
       return NextResponse.json(
-        { error: 'Необходима авторизация' },
+        { message: 'Необходима авторизация' },
         { status: 401 }
       );
     }
 
-    const userId = Number(session.user.id);
+    const userId = Number(decoded.id);
     const id = Number(new URL(req.url).pathname.split('/').pop());
 
     const cartItem = await prisma.cartItems.findFirst({
@@ -90,7 +103,6 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    // Проверяем, что корзина принадлежит текущему пользователю
     if (cartItem.cart.userId !== userId) {
       return NextResponse.json(
         { error: 'У вас нет доступа к этому элементу корзины' },
