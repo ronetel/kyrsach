@@ -4,19 +4,25 @@ import { authOptions } from '@/shered/constants/auth-options';
 import { prisma } from '@/prisma/prisma-client';
 import { CreateCartItemValues } from '@/shered/services/dto/cart.dto';
 import { updateCartTotalAmount } from '@/shered/lib/update-cart-total-amount';
+import jwt from 'jsonwebtoken';
 
 export async function GET(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user?.id) {
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return NextResponse.json(
-        { error: 'Необходима авторизация' },
+        { message: 'Authorization header missing or invalid' },
         { status: 401 }
       );
     }
+    const token = authHeader.split(' ')[1];
+    // Верифицируем токен
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || '') as {
+      id: number;
+      email: string;
+    };
 
-    const userId = Number(session.user.id);
+    const userId = Number(decoded.id);
 
     const userCart = await prisma.carts.findFirst({
       where: {
