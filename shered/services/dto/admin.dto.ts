@@ -28,7 +28,6 @@ export interface OrderDTO
   status: 'PENDING' | 'SUCCEEDED' | 'CANCELLED';
 }
 
-// DTO для добавления товара
 export interface SizePrice {
   sizeId: number | null;
   price: number;
@@ -42,7 +41,6 @@ export interface AddProductDTO {
   sizes?: SizePrice[];
 }
 
-// Значения для обновления статуса заказа
 export interface UpdateOrderStatusValues {
   status: 'PENDING' | 'SUCCEEDED' | 'CANCELLED';
 }

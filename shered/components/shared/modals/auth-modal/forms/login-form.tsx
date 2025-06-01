@@ -36,15 +36,12 @@ export const LoginForm: React.FC<Props> = ({ onClose, onLoginSuccess }) => {
         throw new Error(resp?.error || 'Login failed');
       }
 
-      // Обновляем сессию
       await update();
 
-      // Получаем сессию с помощью getSession
       const updatedSession = await getSession();
 
-      // Проверяем роль пользователя
       if (updatedSession?.user?.role === 'Admin') {
-        router.push('/admin'); // Редирект для администратора
+        router.push('/admin');
         return;
       }
 
@@ -64,13 +61,23 @@ export const LoginForm: React.FC<Props> = ({ onClose, onLoginSuccess }) => {
 
   return (
     <FormProvider {...form}>
-      <form className="flex flex-col gap-5" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="flex flex-col gap-5"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <div className="flex justify-between items-center">
           <div className="mr-2">
             <Titles text="Вход в аккаунт" size="md" className="font-bold" />
-            <p className="text-gray-400">Введите свою почту, чтобы войти в свой аккаунт</p>
+            <p className="text-gray-400">
+              Введите свою почту, чтобы войти в свой аккаунт
+            </p>
           </div>
-          <img src="/assets/images/phone-icon.png" alt="phone-icon" width={60} height={60} />
+          <img
+            src="/assets/images/phone-icon.png"
+            alt="phone-icon"
+            width={60}
+            height={60}
+          />
         </div>
 
         <FormInput name="email" label="E-Mail" required />

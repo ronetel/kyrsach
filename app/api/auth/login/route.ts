@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/prisma/prisma-client'; // Убедись, что путь правильный
+import { prisma } from '@/prisma/prisma-client';
 import { compare } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -14,7 +14,6 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // Ищем пользователя в базе данных
     const user = await prisma.users.findFirst({
       where: {
         Email_user: email,
@@ -25,7 +24,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'User not found' }, { status: 401 });
     }
 
-    // Проверяем пароль
     const isPasswordValid = await compare(password, user.Password_user);
     if (!isPasswordValid) {
       return NextResponse.json(
@@ -41,7 +39,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Генерируем JWT токен
     const token = jwt.sign(
       { id: user.ID_User, email: user.Email_user },
       process.env.JWT_SECRET || ''

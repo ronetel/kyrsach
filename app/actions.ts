@@ -1,11 +1,13 @@
 'use server';
 
 import { prisma } from '@/prisma/prisma-client';
+import { getOrderReceiptTemplate } from '@/shered/components/shared/email-temapltes/check';
 import { getVerificationTemplate } from '@/shered/components/shared/email-temapltes/verification-user';
 import { CheckoutFormValues } from '@/shered/constants';
 import { authOptions } from '@/shered/constants/auth-options';
 import { getUserSession } from '@/shered/lib/get-user-session';
 import { sendVerificationEmail } from '@/shered/lib/send-email';
+import { CartItemDTO } from '@/shered/services/dto/cart.dto';
 import { OrderStatus, Prisma } from '@prisma/client';
 import { hashSync } from 'bcryptjs';
 import { getServerSession } from 'next-auth';
@@ -81,7 +83,7 @@ export async function createOrder(
         totalAmount: finalTotalPrice,
         status: OrderStatus.PENDING,
         points: loyaltyPoints,
-        items: userCart.items,
+        items: JSON.stringify(userCart.items),
       },
     });
 
@@ -123,10 +125,148 @@ export async function createOrder(
       }),
     ]);
 
+    await sendVerificationEmail(
+      data.email,
+      `Next Pizza / 🧾 Чек за заказ #${order.id}`,
+      getOrderReceiptTemplate(
+        order.id,
+        userCart.items,
+        finalTotalPrice,
+        data.address,
+        data.firstName + ' ' + data.lastName,
+        data.email,
+        data.phone,
+        data.comment
+      )
+    );
+
     return '/';
   } catch (err) {
     console.error(
       '[CreateOrder] Server error at',
+      new Date().toISOString(),
+      err
+    );
+    throw err;
+  }
+}
+export async function createOrderForMobile(
+  decodedToken: { id: number; email: string },
+  data: CheckoutFormValues,
+  loyaltyPoints: number,
+  totalPrice: number,
+  usePoints: boolean,
+  accountPoints: number,
+  cart: CartItemDTO[]
+) {
+  try {
+    const userId = Number(decodedToken.id);
+
+    const user = await prisma.users.findUnique({
+      where: { ID_User: userId },
+    });
+
+    if (!user) {
+      throw new Error('Пользователь не найден');
+    }
+
+    if (!cart || cart.length === 0) {
+      throw new Error('Корзина пуста');
+    }
+
+    const userCart = await prisma.carts.findFirst({
+      where: { userId: userId },
+      include: {
+        items: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    let finalTotalPrice = totalPrice;
+    let pointsToDeduct = 0;
+
+    if (usePoints && accountPoints > 0) {
+      pointsToDeduct = Math.min(accountPoints, totalPrice);
+      finalTotalPrice = Math.max(totalPrice - pointsToDeduct, 0);
+    }
+
+    const cartItemsWithProducts = await Promise.all(
+      cart.map(async (item) => {
+        const productItem = await prisma.productItems.findUnique({
+          where: { Id: item.productItemId },
+          include: {
+            Product: true,
+          },
+        });
+        return {
+          ...item,
+          productItem,
+        };
+      })
+    );
+
+    const order = await prisma.orders.create({
+      data: {
+        token: userCart?.token || '',
+        userId: userId,
+        fullName: data.firstName + ' ' + data.lastName,
+        email: data.email,
+        phone: data.phone,
+        address: data.address,
+        comment: data.comment,
+        totalAmount: finalTotalPrice,
+        status: OrderStatus.PENDING,
+        points: loyaltyPoints,
+        items: JSON.stringify(cart),
+      },
+    });
+
+    const currentPoints = user.Points || 0;
+    const newPoints =
+      currentPoints + loyaltyPoints - (usePoints ? pointsToDeduct : 0);
+
+    await prisma.users.update({
+      where: { ID_User: userId },
+      data: { Points: newPoints },
+    });
+
+    const existingCart = await prisma.carts.findFirst({
+      where: { userId: userId },
+    });
+
+    if (existingCart) {
+      await prisma.$transaction([
+        prisma.cartItems.deleteMany({
+          where: { cartId: existingCart.id },
+        }),
+        prisma.carts.update({
+          where: { id: existingCart.id },
+          data: { totalAmount: 0 },
+        }),
+      ]);
+    }
+
+    await sendVerificationEmail(
+      data.email,
+      `Next Pizza / 🧾 Чек за заказ #${order.id}`,
+      getOrderReceiptTemplate(
+        order.id,
+        cartItemsWithProducts,
+        finalTotalPrice,
+        data.address,
+        data.firstName + ' ' + data.lastName,
+        data.email,
+        data.phone,
+        data.comment
+      )
+    );
+
+    return '/';
+  } catch (err) {
+    console.error(
+      '[CreateOrderForMobile] Server error at',
       new Date().toISOString(),
       err
     );

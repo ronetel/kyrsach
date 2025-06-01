@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/prisma/prisma-client'; // Убедись, что путь правильный
+import { prisma } from '@/prisma/prisma-client';
 import jwt from 'jsonwebtoken';
 
 export async function GET(req: NextRequest) {
   try {
-    // Извлекаем токен из заголовка Authorization
     const authHeader = req.headers.get('Authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return NextResponse.json(
@@ -15,13 +14,11 @@ export async function GET(req: NextRequest) {
 
     const token = authHeader.split(' ')[1];
 
-    // Верифицируем токен
     const decoded = jwt.verify(token, process.env.JWT_SECRET || '') as {
       id: number;
       email: string;
     };
 
-    // Ищем пользователя в базе данных
     const user = await prisma.users.findFirst({
       where: {
         ID_User: decoded.id,
@@ -33,7 +30,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
 
-    // Возвращаем данные пользователя
     return NextResponse.json(
       {
         id: user.ID_User,

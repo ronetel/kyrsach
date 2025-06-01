@@ -106,7 +106,7 @@ export const authOptions: AuthOptions = {
                 provider: account?.provider,
                 providerId: account?.providerAccountId
                   ? String(account.providerAccountId)
-                  : null, // Преобразуем в строку
+                  : null,
               },
               { Email_user: user.email },
             ],
@@ -122,7 +122,7 @@ export const authOptions: AuthOptions = {
               provider: account?.provider,
               providerId: account?.providerAccountId
                 ? String(account.providerAccountId)
-                : null, // Преобразуем в строку
+                : null,
             },
           });
 
@@ -154,7 +154,7 @@ export const authOptions: AuthOptions = {
             provider: account?.provider,
             providerId: account?.providerAccountId
               ? String(account.providerAccountId)
-              : null, // Преобразуем в строку
+              : null,
           },
         });
 

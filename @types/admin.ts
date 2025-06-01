@@ -1,4 +1,3 @@
-// types/admin.ts
 export interface Product {
   ID_Product: number;
   name: string;

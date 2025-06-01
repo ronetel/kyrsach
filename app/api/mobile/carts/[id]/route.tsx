@@ -1,25 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/prisma/prisma-client';
-import { CreateCartItemValues } from '@/shered/services/dto/cart.dto';
 import { updateCartTotalAmount } from '@/shered/lib/update-cart-total-amount';
-import jwt from 'jsonwebtoken';
-
-const verifyToken = (req: NextRequest) => {
-  const authHeader = req.headers.get('Authorization');
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return null;
-  }
-  const token = authHeader.split(' ')[1];
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || '') as {
-      id: number;
-      email: string;
-    };
-    return decoded;
-  } catch (error) {
-    return null;
-  }
-};
+import { verifyToken } from '@/shered/lib/verify-token';
 
 export async function PATCH(req: NextRequest) {
   try {
@@ -68,7 +50,7 @@ export async function PATCH(req: NextRequest) {
       );
     }
 
-    return NextResponse.json(updatedUserCart);
+    return NextResponse.json(updatedUserCart, { status: 200 });
   } catch (error) {
     console.error('[CART_PATCH] Server error', error);
     return NextResponse.json(
@@ -114,7 +96,7 @@ export async function DELETE(req: NextRequest) {
 
     const updatedUserCart = await updateCartTotalAmount(undefined, userId);
 
-    return NextResponse.json(updatedUserCart);
+    return NextResponse.json(updatedUserCart, { status: 200 });
   } catch (error) {
     console.error('[CART_DELETE] Server error', error);
     return NextResponse.json(
