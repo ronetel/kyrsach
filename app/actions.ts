@@ -295,6 +295,7 @@ export async function updateUserInfo(body: Prisma.UsersUpdateInput) {
       data: {
         Name_user: body.Name_user,
         Email_user: body.Email_user,
+        Phone: body.Phone,
         Password_user: body.Password_user
           ? hashSync(body.Password_user as string, 10)
           : findUser?.Password_user,

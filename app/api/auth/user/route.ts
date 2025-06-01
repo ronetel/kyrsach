@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error in /api/auth/me:', error);
+    console.error('Error in /api/auth/user:', error);
     if (error instanceof jwt.JsonWebTokenError) {
       return NextResponse.json(
         { message: 'Invalid or expired token' },

@@ -98,7 +98,6 @@ export const CheckoutSidebar: React.FC<Props> = ({
         }
       />
 
-      {/* Переключатель для использования баллов аккаунта */}
       {isAuthenticated && accountPoints > 0 && (
         <div className="flex items-center mt-4">
           <Checkbox
@@ -108,7 +107,7 @@ export const CheckoutSidebar: React.FC<Props> = ({
             disabled={loading || accountPoints === 0}
           />
           <label htmlFor="use-points" className="ml-2 text-sm">
-            Использовать {accountPoints} баллов аккаунта для оплаты
+            Потратить {accountPoints} баллов аккаунта для оплаты
           </label>
         </div>
       )}

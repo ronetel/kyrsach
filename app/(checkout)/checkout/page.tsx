@@ -64,6 +64,7 @@ export default function CheckoutPage() {
 
         form.setValue('firstName', firstName);
         form.setValue('lastName', lastName);
+        form.setValue('phone', data.Phone || '');
         form.setValue('email', data.Email_user);
       }
     }

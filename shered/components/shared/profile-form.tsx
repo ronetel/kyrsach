@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { FormProvider, useForm, SubmitHandler } from 'react-hook-form';
-import { formRegisterSchema } from './modals/auth-modal/forms/schemas';
 import { Users } from '@prisma/client';
 import toast from 'react-hot-toast';
 import { signOut } from 'next-auth/react';
@@ -15,20 +14,30 @@ import { updateUserInfo } from '@/app/actions';
 import { z } from 'zod';
 import { OrderHistory } from './order-history';
 
-const profileFormSchema = z.object({
-  fullName: z.string().min(2, { message: 'Введите имя и фамилию' }),
-  email: z.string().email({ message: 'Введите корректную почту' }),
-  password: z.string().min(4, { message: 'Введите корректный пароль' }).optional().or(z.literal('')),
-  confirmPassword: z.string().optional().or(z.literal('')),
-}).refine((data) => {
-  if (data.password || data.confirmPassword) {
-    return data.password === data.confirmPassword;
-  }
-  return true;
-}, {
-  message: 'Пароли не совпадают',
-  path: ['confirmPassword'],
-});
+const profileFormSchema = z
+  .object({
+    fullName: z.string().min(2, { message: 'Введите имя и фамилию' }),
+    email: z.string().email({ message: 'Введите корректную почту' }),
+    phone: z.string().min(11, { message: 'Введите корректный номер' }),
+    password: z
+      .string()
+      .min(4, { message: 'Введите корректный пароль' })
+      .optional()
+      .or(z.literal('')),
+    confirmPassword: z.string().optional().or(z.literal('')),
+  })
+  .refine(
+    (data) => {
+      if (data.password || data.confirmPassword) {
+        return data.password === data.confirmPassword;
+      }
+      return true;
+    },
+    {
+      message: 'Пароли не совпадают',
+      path: ['confirmPassword'],
+    }
+  );
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
@@ -42,6 +51,7 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
     defaultValues: {
       fullName: data.Name_user,
       email: data.Email_user,
+      phone: data.Phone || '',
       password: '',
       confirmPassword: '',
     },
@@ -50,14 +60,16 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
   const onSubmit: SubmitHandler<ProfileFormValues> = async (data) => {
     try {
       const updateData: {
-        Email_user: string;
-        Name_user: string;
+        Email_user?: string;
+        Name_user?: string;
+        Phone?: string;
         Password_user?: string;
       } = {
         Email_user: data.email,
         Name_user: data.fullName,
+        Phone: data.phone,
       };
-      
+
       if (data.password) {
         updateData.Password_user = data.password;
       }
@@ -82,40 +94,45 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
 
   return (
     <Container className="my-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
-          <Titles text='Личные данные' size="md" className="font-bold" />
+          <Titles text="Личные данные" size="md" className="font-bold" />
 
-      <FormProvider {...form}>
-        <form className="flex flex-col gap-5 w-96 mt-10" onSubmit={form.handleSubmit(onSubmit)}>
-          <FormInput name="email" label="E-Mail" required />
-          <FormInput name="fullName" label="Полное имя" required />
+          <FormProvider {...form}>
+            <form
+              className="flex flex-col gap-5 w-96 mt-10"
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
+              <FormInput name="email" label="E-Mail" required />
+              <FormInput name="fullName" label="Полное имя" required />
+              <FormInput name="phone" label="Номер телефона" required />
 
-          <FormInput 
-            type="password" 
-            name="password" 
-            label="Новый пароль" 
-          />
-          <FormInput 
-            type="password" 
-            name="confirmPassword" 
-            label="Повторите пароль" 
-          />
+              <FormInput type="password" name="password" label="Новый пароль" />
+              <FormInput
+                type="password"
+                name="confirmPassword"
+                label="Повторите пароль"
+              />
 
-          <Button disabled={form.formState.isSubmitting} className="text-base mt-10" type="submit">
-            Сохранить
-          </Button>
+              <Button
+                disabled={form.formState.isSubmitting}
+                className="text-base mt-10"
+                type="submit"
+              >
+                Сохранить
+              </Button>
 
-          <Button
-            onClick={onClickSignOut}
-            variant="secondary"
-            disabled={form.formState.isSubmitting}
-            className="text-base"
-            type="button">
-            Выйти
-          </Button>
-        </form>
-      </FormProvider>
+              <Button
+                onClick={onClickSignOut}
+                variant="secondary"
+                disabled={form.formState.isSubmitting}
+                className="text-base"
+                type="button"
+              >
+                Выйти
+              </Button>
+            </form>
+          </FormProvider>
         </div>
 
         <div>
