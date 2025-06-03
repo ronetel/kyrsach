@@ -8,6 +8,9 @@ import {
   OrderDTO,
   AddProductDTO,
 } from '@/shered/services/dto/admin.dto';
+import { getUserSession } from '../lib/get-user-session';
+import { redirect } from 'next/navigation';
+import { prisma } from '@/prisma/prisma-client';
 
 export interface AdminState {
   categories: CategoryDTO[];
@@ -18,6 +21,7 @@ export interface AdminState {
   error: boolean;
 
   fetchAdminData: () => Promise<void>;
+  IsAdminData: () => Promise<void>;
   updateOrderStatus: (
     orderId: number,
     status: 'PENDING' | 'SUCCEEDED' | 'CANCELLED'
@@ -33,6 +37,21 @@ export const useAdminStore = create<AdminState>((set, get) => ({
   orders: [],
   loading: true,
   error: false,
+  IsAdminData: async () => {
+    const session = await getUserSession();
+
+    if (!session) {
+      return redirect('/not-auth');
+    }
+
+    const user = await prisma.users.findFirst({
+      where: { ID_User: Number(session.id) },
+    });
+
+    if (!user || user.role !== 'Admin') {
+      return redirect('/not-auth');
+    }
+  },
 
   fetchAdminData: async () => {
     try {

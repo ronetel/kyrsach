@@ -127,7 +127,7 @@ export async function createOrder(
 
     await sendVerificationEmail(
       data.email,
-      `Next Pizza / 🧾 Чек за заказ #${order.id}`,
+      `Green Bite / 🧾 Чек за заказ #${order.id}`,
       getOrderReceiptTemplate(
         order.id,
         userCart.items,
@@ -250,7 +250,7 @@ export async function createOrderForMobile(
 
     await sendVerificationEmail(
       data.email,
-      `Next Pizza / 🧾 Чек за заказ #${order.id}`,
+      `Green Bite / 🧾 Чек за заказ #${order.id}`,
       getOrderReceiptTemplate(
         order.id,
         cartItemsWithProducts,
@@ -342,7 +342,7 @@ export async function registerUser(body: Prisma.UsersCreateInput) {
 
     await sendVerificationEmail(
       createdUser.Email_user,
-      'Next Pizza / 📝 Подтверждение регистрации',
+      'Green Bite / 📝 Подтверждение регистрации',
       getVerificationTemplate(code)
     );
   } catch (err) {

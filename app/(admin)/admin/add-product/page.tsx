@@ -9,24 +9,12 @@ import { getUserSession } from '@/shered/lib/get-user-session';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/prisma/prisma-client';
 
-export default async function AddProductPage() {
-  const session = await getUserSession();
-
-  if (!session) {
-    return redirect('/not-auth');
-  }
-
-  const user = await prisma.users.findFirst({
-    where: { ID_User: Number(session.id) },
-  });
-
-  if (!user || user.role !== 'Admin') {
-    return redirect('/not-auth');
-  }
-  const { loading, fetchAdminData } = useAdminStore();
+export default function AddProductPage() {
+  const { loading, fetchAdminData, IsAdminData } = useAdminStore();
 
   useEffect(() => {
     fetchAdminData();
+    IsAdminData();
   }, [fetchAdminData]);
 
   if (loading) {

@@ -158,6 +158,8 @@ export async function GET(request: NextRequest) {
               minute: '2-digit',
             }),
             address: order.address,
+            fullname: order.fullName,
+            email: order.email,
             items,
             total: order.totalAmount,
             status: order.status,

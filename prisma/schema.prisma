@@ -20,17 +20,9 @@ model Users {
   providerId String?
 
   Points           Int?
-  Addresses        Addresses[]
   Cart             Carts?
   Order            Orders[]
   verificationCode VerificationCode?
-}
-
-model Addresses {
-  ID_Address Int    @id @default(autoincrement())
-  UserID     Int
-  Address    String
-  User       Users  @relation(fields: [UserID], references: [ID_User])
 }
 
 model ProductCategories {
@@ -106,7 +98,6 @@ model Orders {
 
   totalAmount Int
   status      OrderStatus
-  paymentId   String?
   points      Int
 
   items Json

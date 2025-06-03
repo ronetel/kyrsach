@@ -4,7 +4,7 @@ module.exports = {
       {
         source: '/api/:path*',
         headers: [
-          { key: 'Access-Control-Allow-Origin', value: '*' }, // Замени '*' на конкретный домен при продакшене
+          { key: 'Access-Control-Allow-Origin', value: '*' },
           {
             key: 'Access-Control-Allow-Methods',
             value: 'GET,POST,PUT,DELETE,OPTIONS',

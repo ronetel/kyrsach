@@ -29,10 +29,7 @@ export const updateOrderStatus = async (
   values: UpdateOrderStatusValues
 ): Promise<OrderDTO> => {
   return (
-    await axiosInstance.patch<OrderDTO>(
-      `/api/admin/orders/${orderId}/status`,
-      values
-    )
+    await axiosInstance.patch<OrderDTO>(`/api/orders/${orderId}/status`, values)
   ).data;
 };
 

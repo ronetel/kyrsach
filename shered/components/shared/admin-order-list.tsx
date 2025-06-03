@@ -30,7 +30,7 @@ const OrderList: React.FC<Props> = ({ orders, onUpdateOrderStatus }) => {
                   <p>Дата: {order.date}</p>
                   <p>Адрес: {order.address}</p>
                   <p>
-                    Клиент: {order.user.Name_user} ({order.user.Email_user})
+                    Клиент: {order.fullName} ({order.email})
                   </p>
                   <p>Сумма: {order.total} ₽</p>
                 </div>

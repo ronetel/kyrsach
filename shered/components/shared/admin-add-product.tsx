@@ -12,7 +12,6 @@ const AddProductForm: React.FC = () => {
     categories,
     sizes,
     loading,
-    selectedCategory,
     isPizza,
     sizesArray,
     addSizeToProduct,
@@ -47,11 +46,7 @@ const AddProductForm: React.FC = () => {
               Проверьте правильность заполнения формы
             </p>
           )}
-          <ProductDetailsForm
-            categories={categories}
-            register={register}
-            errors={errors}
-          />
+          <ProductDetailsForm categories={categories} register={register} />
           <PriceAndSizeForm
             isPizza={isPizza}
             sizes={sizes}

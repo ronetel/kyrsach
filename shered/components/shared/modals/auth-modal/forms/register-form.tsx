@@ -11,10 +11,9 @@ import { Button } from '../../../../ui/button';
 
 interface Props {
   onClose?: VoidFunction;
-  onClickLogin?: VoidFunction;
 }
 
-export const RegisterForm: React.FC<Props> = ({ onClose, onClickLogin }) => {
+export const RegisterForm: React.FC<Props> = ({ onClose }) => {
   const form = useForm<TFormRegisterValues>({
     resolver: zodResolver(formRegisterSchema),
     defaultValues: {
@@ -48,13 +47,26 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onClickLogin }) => {
 
   return (
     <FormProvider {...form}>
-      <form className="flex flex-col gap-5" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="flex flex-col gap-5"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FormInput name="email" label="E-Mail" required />
         <FormInput name="fullName" label="Полное имя" required />
         <FormInput name="password" label="Пароль" type="password" required />
-        <FormInput name="confirmPassword" label="Подтвердите пароль" type="password" required />
+        <FormInput
+          name="confirmPassword"
+          label="Подтвердите пароль"
+          type="password"
+          required
+        />
 
-        <Button loading={form.formState.isSubmitting} className="h-12 text-base text-white" variant='red' type="submit">
+        <Button
+          loading={form.formState.isSubmitting}
+          className="h-12 text-base text-white"
+          variant="red"
+          type="submit"
+        >
           Зарегистрироваться
         </Button>
       </form>
