@@ -54,12 +54,6 @@ export const getOrderReceiptTemplate = (
       <p><strong>Телефон:</strong> ${phone}</p>
       <p><strong>Адрес доставки:</strong> ${address}</p>
       ${comment ? `<p><strong>Комментарий:</strong> ${comment}</p>` : ''}
-
-      <div style="margin-top: 30px; text-align: center;">
-        <a href="https://green-bite-beta.vercel.app/profile" 
-           style="display: inline-block; padding: 12px 24px; background: #2563eb; color: white; text-decoration: none; border-radius: 4px;">
-          Посмотреть заказ
-        </a>
       </div>
     </div>
   `;
