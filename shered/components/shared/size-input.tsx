@@ -50,9 +50,6 @@ export const SizeInput: React.FC<SizeInputProps> = ({
           required
           className="mb-4"
         />
-        {errors.sizes?.[index]?.price && (
-          <p className="text-red-500">{errors.sizes[index].price.message}</p>
-        )}
       </div>
       {index > 0 && (
         <button

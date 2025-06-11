@@ -14,7 +14,7 @@ const addProductSchema = z.object({
   imageUrl: z.string().optional(),
   categoryId: z.number().min(1, { message: 'Выберите категорию' }),
   price: z
-    .string()
+    .number()
     .optional()
     .refine((val) => !val || Number(val) > 0, {
       message: 'Цена должна быть больше 0',
@@ -57,7 +57,7 @@ export const useAddProductForm = (): UseAddProductFormReturn => {
       description: '',
       imageUrl: '',
       categoryId: categories[0]?.ID_Category || 0,
-      price: '',
+      price: 0,
       sizes: [],
     },
   });

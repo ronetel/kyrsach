@@ -19,93 +19,25 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { Name_categry } = body;
+    const { name } = body; // Изменено с Name_categry на name для соответствия клиентскому коду
 
-    if (!Name_categry) {
+    if (!name || typeof name !== 'string' || name.trim().length < 2) {
       return NextResponse.json(
-        { error: 'Необходимо указать название категории.' },
+        {
+          error:
+            'Название категории обязательно и должно содержать минимум 2 символа',
+        },
         { status: 400 }
       );
     }
 
     const newCategory = await prisma.productCategories.create({
-      data: { Name_categry },
+      data: { Name_categry: name.trim() }, // Преобразуем в Name_categry для базы данных
     });
 
     return NextResponse.json(newCategory, { status: 201 });
   } catch (error) {
     console.error('[CATEGORIES_POST] Ошибка:', error);
-    return NextResponse.json({ error: 'Ошибка сервера' }, { status: 500 });
-  }
-}
-
-export async function DELETE(
-  request: NextRequest,
-  context: { params: Promise<{ id: string }> }
-) {
-  try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.id || session.user.role !== 'Admin') {
-      return NextResponse.json(
-        { error: 'Доступ запрещён. Требуются права администратора.' },
-        { status: 403 }
-      );
-    }
-
-    const { id } = await context.params;
-    const categoryId = Number(id);
-
-    if (!id) {
-      return NextResponse.json(
-        { error: 'ID категории обязателен' },
-        { status: 400 }
-      );
-    }
-
-    await prisma.productCategories.delete({
-      where: { ID_Category: categoryId },
-    });
-
-    return NextResponse.json({ message: 'Категория удалена' });
-  } catch (error) {
-    console.error('[CATEGORIES_DELETE] Ошибка:', error);
-    return NextResponse.json({ error: 'Ошибка сервера' }, { status: 500 });
-  }
-}
-
-export async function PATCH(
-  request: NextRequest,
-  context: { params: Promise<{ id: string }> }
-) {
-  try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.id || session.user.role !== 'Admin') {
-      return NextResponse.json(
-        { error: 'Доступ запрещён. Требуются права администратора.' },
-        { status: 403 }
-      );
-    }
-
-    const { id } = await context.params;
-    const categoryId = Number(id);
-    const body = await request.json();
-    const { Name_categry } = body;
-
-    if (!id) {
-      return NextResponse.json(
-        { error: 'ID категории обязателен' },
-        { status: 400 }
-      );
-    }
-
-    const updatedCategory = await prisma.productCategories.update({
-      where: { ID_Category: categoryId },
-      data: { Name_categry },
-    });
-
-    return NextResponse.json(updatedCategory);
-  } catch (error) {
-    console.error('[CATEGORIES_PATCH] Ошибка:', error);
     return NextResponse.json({ error: 'Ошибка сервера' }, { status: 500 });
   }
 }

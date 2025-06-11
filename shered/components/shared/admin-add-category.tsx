@@ -23,7 +23,7 @@ const AddCategoryForm: React.FC = () => {
 
   const onSubmit = async (data: CategoryFormData) => {
     try {
-      await addCategory(data.name);
+      await addCategory(data.name); // Передаем только name
       await fetchAdminData();
       form.reset();
     } catch (error) {
@@ -55,7 +55,13 @@ const AddCategoryForm: React.FC = () => {
             <input
               id="name"
               type="text"
-              {...register('name', { required: 'Название обязательно' })}
+              {...register('name', {
+                required: 'Название обязательно',
+                minLength: {
+                  value: 2,
+                  message: 'Название должно содержать минимум 2 символа',
+                },
+              })}
               className="w-full p-2 bg-[#4A3B3B] rounded text-white focus:outline-none focus:ring-2 focus:ring-red-500"
             />
             {errors.name && (

@@ -95,10 +95,9 @@ export const useAdminStore = create<AdminState>((set, get) => ({
 
   fetchAdminData: async (initialLoad = false) => {
     try {
-      if (get().loading) return; // Предотвращаем повторные запросы
+      if (get().loading) return;
       set({ loading: true, error: false });
 
-      // Загружаем только базовые данные при начальной загрузке
       if (initialLoad) {
         const [categories, sizes, products] = await Promise.all([
           getCategories(),
@@ -107,7 +106,6 @@ export const useAdminStore = create<AdminState>((set, get) => ({
         ]);
         set({ categories, sizes, products });
       } else {
-        // Полная загрузка (например, для других разделов админки)
         const [categories, sizes, products, orders, users, stories] =
           await Promise.all([
             getCategories(),

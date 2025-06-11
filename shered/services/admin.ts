@@ -49,7 +49,7 @@ export const addProduct = async (
 
 // Предполагаемые методы для категорий
 export const getCategoriesList = async (): Promise<CategoryDTO[]> => {
-  return (await axiosInstance.get<CategoryDTO[]>('/api/categories')).data; // Используем существующий эндпоинт
+  return (await axiosInstance.get<CategoryDTO[]>('/api/categories')).data;
 };
 
 export const addCategory = async (name: string): Promise<CategoryDTO> => {

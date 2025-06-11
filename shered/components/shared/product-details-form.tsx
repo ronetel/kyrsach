@@ -1,79 +1,60 @@
 'use client';
 
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { FormInput } from './form/form-input';
+import { RequiredSymbol } from './required-symbol';
+import { CategoryDTO } from '@/shered/services/dto/admin.dto';
+import { AddProductFormValues } from '@/shered/hooks/use-add-product-form';
 
 interface ProductDetailsFormProps {
-  categories: { ID_Category: number; Name_categry: string }[];
+  categories: CategoryDTO[];
+  register: UseFormRegister<AddProductFormValues>;
+  errors: FieldErrors<AddProductFormValues>; // Добавляем errors
 }
 
 export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
   categories,
+  register,
+  errors,
 }) => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium mb-1">
-          Название *
-        </label>
-        <input
-          id="name"
-          type="text"
-          {...register('name', { required: 'Название обязательно' })}
-          className="w-full p-2 bg-[#4A3B3B] rounded text-white focus:outline-none focus:ring-2 focus:ring-red-500"
-        />
-        {errors.name && (
-          <p className="text-red-500 text-sm mt-1">
-            {errors.name.message as string}
-          </p>
+        <FormInput name="name" label="Название" required className="mb-4" />
+      </div>
+      <div>
+        <FormInput name="description" label="Описание" className="mb-4" />
+        {errors.description && (
+          <p className="text-red-500">{errors.description.message}</p>
         )}
       </div>
       <div>
-        <label htmlFor="imageUrl" className="block text-sm font-medium mb-1">
-          URL изображения
-        </label>
-        <input
-          id="imageUrl"
-          type="text"
-          {...register('imageUrl')}
-          className="w-full p-2 bg-[#4A3B3B] rounded text-white focus:outline-none focus:ring-2 focus:ring-red-500"
-        />
+        <FormInput name="imageUrl" label="URL изображения" className="mb-4" />
+        {errors.imageUrl && (
+          <p className="text-red-500">{errors.imageUrl.message}</p>
+        )}
       </div>
-      <div className="md:col-span-2">
-        <label htmlFor="description" className="block text-sm font-medium mb-1">
-          Описание
-        </label>
-        <textarea
-          id="description"
-          {...register('description')}
-          className="w-full p-2 bg-[#4A3B3B] rounded text-white focus:outline-none focus:ring-2 focus:ring-red-500 h-24 resize-y"
-        />
-      </div>
-      <div className="md:col-span-2">
-        <label htmlFor="categoryId" className="block text-sm font-medium mb-1">
-          Категория *
+      <div className="mb-4">
+        <label className="block font-medium mb-2">
+          Категория <RequiredSymbol />
         </label>
         <select
-          id="categoryId"
-          {...register('categoryId', { required: 'Категория обязательна' })}
-          className="w-full p-2 bg-[#4A3B3B] rounded text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+          {...register('categoryId', { valueAsNumber: true })}
+          className="w-full p-2 bg-[#4A3B3B] text-white rounded h-12 text-md"
+          defaultValue={categories[0]?.ID_Category || 0}
         >
-          <option value="">Выберите категорию</option>
-          {categories.map((category) => (
-            <option key={category.ID_Category} value={category.ID_Category}>
-              {category.Name_categry}
+          <option value={0} disabled>
+            Выберите категорию
+          </option>
+          {categories.map((cat) => (
+            <option key={cat.ID_Category} value={cat.ID_Category}>
+              {cat.Name_categry}
             </option>
           ))}
         </select>
         {errors.categoryId && (
-          <p className="text-red-500 text-sm mt-1">
-            {errors.categoryId.message as string}
-          </p>
+          <p className="text-red-500">{errors.categoryId.message}</p>
         )}
       </div>
     </div>
