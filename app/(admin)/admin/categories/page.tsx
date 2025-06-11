@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useAdminStore } from '@/shered/store/admin';
 import { Button } from '@/shered/components/ui/button';
 import Link from 'next/link';
+import { deleteCategory } from '@/shered/services/admin';
 
 const CategoriesPage = () => {
   const { categories, loading, fetchAdminData } = useAdminStore();
@@ -19,6 +20,9 @@ const CategoriesPage = () => {
   return (
     <div className="min-h-screen bg-main text-white p-6">
       <div className="flex justify-between items-center mb-6">
+        <Link href="/admin">
+          <Button variant="red">Назад</Button>
+        </Link>
         <h1 className="text-3xl font-bold">Управление категориями</h1>
         <Link href="/admin/categories/add">
           <Button variant="red">Добавить категорию</Button>
@@ -40,9 +44,7 @@ const CategoriesPage = () => {
                 </Link>
                 <Button
                   variant="red"
-                  onClick={() => {
-                    /* TODO: Implement delete */
-                  }}
+                  onClick={() => deleteCategory(category.ID_Category)}
                 >
                   Удалить
                 </Button>

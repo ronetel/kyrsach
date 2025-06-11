@@ -20,6 +20,9 @@ const UsersPage = () => {
   return (
     <div className="min-h-screen bg-main text-white p-6">
       <div className="flex justify-between items-center mb-6">
+        <Link href="/admin">
+          <Button variant="red">Назад</Button>
+        </Link>
         <h1 className="text-3xl font-bold">Управление пользователями</h1>
         <Link href="/admin/users/add">
           <Button variant="red">Добавить пользователя</Button>

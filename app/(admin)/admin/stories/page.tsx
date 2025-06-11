@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useAdminStore } from '@/shered/store/admin';
 import { Button } from '@/shered/components/ui/button';
 import Link from 'next/link';
+import { deleteStory } from '@/shered/services/admin';
 
 const StoriesPage = () => {
   const { stories, loading, fetchAdminData } = useAdminStore();
@@ -19,6 +20,9 @@ const StoriesPage = () => {
   return (
     <div className="min-h-screen bg-main text-white p-6">
       <div className="flex justify-between items-center mb-6">
+        <Link href="/admin">
+          <Button variant="red">Назад</Button>
+        </Link>
         <h1 className="text-3xl font-bold">Управление сторисами</h1>
         <Link href="/admin/stories/add">
           <Button variant="red">Добавить сторис</Button>
@@ -42,12 +46,7 @@ const StoriesPage = () => {
                 <Link href={`/admin/stories/edit/${story.id}`}>
                   <Button variant="red">Редактировать</Button>
                 </Link>
-                <Button
-                  variant="red"
-                  onClick={() => {
-                    /* TODO: Implement delete */
-                  }}
-                >
+                <Button variant="red" onClick={() => deleteStory(story.id)}>
                   Удалить
                 </Button>
               </div>

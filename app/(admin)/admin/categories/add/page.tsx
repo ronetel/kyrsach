@@ -10,7 +10,7 @@ export default function AddCategoryPage() {
   const { loading, fetchAdminData } = useAdminStore();
 
   useEffect(() => {
-    fetchAdminData(true); // Загружаем только базовые данные
+    fetchAdminData(true);
   }, [fetchAdminData]);
 
   if (loading) {
