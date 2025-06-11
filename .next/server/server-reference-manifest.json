@@ -1,50 +1,5 @@
 {
-  "node": {
-    "40284bb89baafa1174327e12925112ca705a80bfa4": {
-      "workers": {
-        "app/(root)/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cronetel%5C%5CDesktop%5C%5Ceyrs%5C%5Ckyrsach%5C%5Capp%5C%5Cactions.ts%22%2C%5B%7B%22id%22%3A%2240284bb89baafa1174327e12925112ca705a80bfa4%22%2C%22exportedName%22%3A%22updateUserInfo%22%7D%2C%7B%22id%22%3A%2240a3bd4aa510fd44bfb2d8bfdaca61710058e077b9%22%2C%22exportedName%22%3A%22registerUser%22%7D%2C%7B%22id%22%3A%227cc864e5b60ed96dbbaed41a4ea6b41e897fb62e52%22%2C%22exportedName%22%3A%22createOrder%22%7D%2C%7B%22id%22%3A%227f4f72f3b923190eeb8d03678b6f97f5f736c18021%22%2C%22exportedName%22%3A%22createOrderForMobile%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/(root)/page": "action-browser"
-      }
-    },
-    "40a3bd4aa510fd44bfb2d8bfdaca61710058e077b9": {
-      "workers": {
-        "app/(root)/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cronetel%5C%5CDesktop%5C%5Ceyrs%5C%5Ckyrsach%5C%5Capp%5C%5Cactions.ts%22%2C%5B%7B%22id%22%3A%2240284bb89baafa1174327e12925112ca705a80bfa4%22%2C%22exportedName%22%3A%22updateUserInfo%22%7D%2C%7B%22id%22%3A%2240a3bd4aa510fd44bfb2d8bfdaca61710058e077b9%22%2C%22exportedName%22%3A%22registerUser%22%7D%2C%7B%22id%22%3A%227cc864e5b60ed96dbbaed41a4ea6b41e897fb62e52%22%2C%22exportedName%22%3A%22createOrder%22%7D%2C%7B%22id%22%3A%227f4f72f3b923190eeb8d03678b6f97f5f736c18021%22%2C%22exportedName%22%3A%22createOrderForMobile%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/(root)/page": "action-browser"
-      }
-    },
-    "7cc864e5b60ed96dbbaed41a4ea6b41e897fb62e52": {
-      "workers": {
-        "app/(root)/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cronetel%5C%5CDesktop%5C%5Ceyrs%5C%5Ckyrsach%5C%5Capp%5C%5Cactions.ts%22%2C%5B%7B%22id%22%3A%2240284bb89baafa1174327e12925112ca705a80bfa4%22%2C%22exportedName%22%3A%22updateUserInfo%22%7D%2C%7B%22id%22%3A%2240a3bd4aa510fd44bfb2d8bfdaca61710058e077b9%22%2C%22exportedName%22%3A%22registerUser%22%7D%2C%7B%22id%22%3A%227cc864e5b60ed96dbbaed41a4ea6b41e897fb62e52%22%2C%22exportedName%22%3A%22createOrder%22%7D%2C%7B%22id%22%3A%227f4f72f3b923190eeb8d03678b6f97f5f736c18021%22%2C%22exportedName%22%3A%22createOrderForMobile%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/(root)/page": "action-browser"
-      }
-    },
-    "7f4f72f3b923190eeb8d03678b6f97f5f736c18021": {
-      "workers": {
-        "app/(root)/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cronetel%5C%5CDesktop%5C%5Ceyrs%5C%5Ckyrsach%5C%5Capp%5C%5Cactions.ts%22%2C%5B%7B%22id%22%3A%2240284bb89baafa1174327e12925112ca705a80bfa4%22%2C%22exportedName%22%3A%22updateUserInfo%22%7D%2C%7B%22id%22%3A%2240a3bd4aa510fd44bfb2d8bfdaca61710058e077b9%22%2C%22exportedName%22%3A%22registerUser%22%7D%2C%7B%22id%22%3A%227cc864e5b60ed96dbbaed41a4ea6b41e897fb62e52%22%2C%22exportedName%22%3A%22createOrder%22%7D%2C%7B%22id%22%3A%227f4f72f3b923190eeb8d03678b6f97f5f736c18021%22%2C%22exportedName%22%3A%22createOrderForMobile%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/(root)/page": "action-browser"
-      }
-    }
-  },
+  "node": {},
   "edge": {},
   "encryptionKey": "GFVJ2ypYuZGMIFgfkXr9lkAltQeuAw87G+ODMOfTULE="
 }

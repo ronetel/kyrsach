@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useAdminStore } from '@/shered/store/admin';
 import { Button } from '@/shered/components/ui/button';
 import Link from 'next/link';
+import { deleteUser } from '@/shered/services/admin';
 
 const UsersPage = () => {
   const { users, loading, fetchAdminData } = useAdminStore();
@@ -42,12 +43,7 @@ const UsersPage = () => {
                 <Link href={`/admin/users/edit/${user.ID_User}`}>
                   <Button variant="red">Редактировать</Button>
                 </Link>
-                <Button
-                  variant="red"
-                  onClick={() => {
-                    /* TODO: Implement delete */
-                  }}
-                >
+                <Button variant="red" onClick={() => deleteUser(user.ID_User)}>
                   Удалить
                 </Button>
               </div>

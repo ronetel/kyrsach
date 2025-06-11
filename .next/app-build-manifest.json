@@ -1,26 +1,9 @@
 {
   "pages": {
-    "/layout": [
+    "/api/mobile/carts/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/layout.css",
-      "static/chunks/app/layout.js"
-    ],
-    "/(root)/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/(root)/layout.css",
-      "static/chunks/app/(root)/layout.js"
-    ],
-    "/(root)/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(root)/page.js"
-    ],
-    "/(root)/@modal/default": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(root)/@modal/default.js"
+      "static/chunks/app/api/mobile/carts/route.js"
     ]
   }
 }
