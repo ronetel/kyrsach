@@ -1,3 +1,4 @@
+// @/shered/services/dto/admin.dto.ts
 import {
   ProductCategories,
   Products,
@@ -12,9 +13,24 @@ export type SizeDTO = PizzaSizes;
 
 export interface ProductDTO extends Products {
   Category?: ProductCategories;
+  ProductItems: {
+    Id: number;
+    Size_ID?: number;
+    Price: number;
+    Size?: SizeDTO;
+  }[];
 }
 
-export interface UserDTO extends Pick<Users, 'Name_user' | 'Email_user'> {}
+export interface UserDTO extends Users {
+  // Добавляем все поля из Users для полноты
+}
+
+export interface StoryDTO {
+  id: number;
+  previewImageUrl: string;
+  items: { id: number; sourceUrl: string }[];
+  createdAt: Date;
+}
 
 export interface OrderDTO
   extends Omit<Orders, 'createdAt' | 'updatedAt' | 'totalAmount'> {
@@ -22,7 +38,7 @@ export interface OrderDTO
   updatedAt: string;
   address: string;
   total: number;
-  items: any;
+  items: any[]; // Замените на конкретный тип, если есть
   points: number;
   user: UserDTO;
   status: 'PENDING' | 'SUCCEEDED' | 'CANCELLED';
@@ -38,7 +54,7 @@ export interface AddProductDTO {
   description?: string;
   imageUrl?: string;
   categoryId: number;
-  sizes?: SizePrice[];
+  sizes?: SizePrice[] | undefined;
 }
 
 export interface UpdateOrderStatusValues {

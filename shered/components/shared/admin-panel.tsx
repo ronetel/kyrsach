@@ -5,21 +5,11 @@ import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
-import OrderList from '@/shered/components/shared/admin-order-list';
 import { Button } from '@/shered/components/ui/button';
-import { useAdminStore } from '@/shered/store/admin';
 
 const AdminPanel: React.FC = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const {
-    products,
-    orders,
-    loading,
-    fetchAdminData,
-    updateOrderStatus,
-    deleteProduct,
-  } = useAdminStore();
 
   useEffect(() => {
     if (status === 'loading') return;
@@ -29,15 +19,9 @@ const AdminPanel: React.FC = () => {
       toast.error('Доступ запрещён', { icon: '❌' });
       return;
     }
+  }, [session, status, router]);
 
-    fetchAdminData();
-  }, [session, status, router, fetchAdminData]);
-
-  const handleSignOut = async () => {
-    await signOut({ callbackUrl: '/' });
-  };
-
-  if (status === 'loading' || loading) {
+  if (status === 'loading') {
     return <div className="text-white text-center mt-10">Загрузка...</div>;
   }
 
@@ -45,49 +29,37 @@ const AdminPanel: React.FC = () => {
     <div className="min-h-screen bg-main text-white p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Панель администратора</h1>
-        <Button variant="red" onClick={handleSignOut}>
+        <Button variant="red" onClick={() => signOut({ callbackUrl: '/' })}>
           Выйти
         </Button>
       </div>
-      <div className="mb-6">
-        <Link href="/admin/add-product">
-          <Button variant="red">Добавить товар</Button>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <Link href="/admin/products">
+          <Button variant="red" className="w-full">
+            Товары
+          </Button>
+        </Link>
+        <Link href="/admin/categories">
+          <Button variant="red" className="w-full">
+            Категории
+          </Button>
+        </Link>
+        <Link href="/admin/orders">
+          <Button variant="red" className="w-full">
+            Заказы
+          </Button>
+        </Link>
+        <Link href="/admin/users">
+          <Button variant="red" className="w-full">
+            Пользователи
+          </Button>
+        </Link>
+        <Link href="/admin/stories">
+          <Button variant="red" className="w-full">
+            Сторисы
+          </Button>
         </Link>
       </div>
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Список товаров</h2>
-        {products.length === 0 ? (
-          <p>Товары отсутствуют.</p>
-        ) : (
-          <div className="space-y-4">
-            {products.map((product) => (
-              <div
-                key={product.ID_Product}
-                className="bg-[#3A2B2B] p-4 rounded-lg shadow-lg flex justify-between items-center"
-              >
-                <div>
-                  <p className="text-lg font-semibold">{product.name}</p>
-                  <p>
-                    Категория:{' '}
-                    {product.Category?.Name_categry || 'Без категории'}
-                  </p>
-                </div>
-                <div>
-                  <Button
-                    onClick={() => deleteProduct(product.ID_Product)}
-                    variant="red"
-                  >
-                    Удалить
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-      <section className="mt-10">
-        <OrderList orders={orders} onUpdateOrderStatus={updateOrderStatus} />
-      </section>
     </div>
   );
 };

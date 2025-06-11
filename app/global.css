@@ -162,3 +162,6 @@ body {
   color: white;
   font-family: 'GreenBiteBold', sans-serif;
 }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

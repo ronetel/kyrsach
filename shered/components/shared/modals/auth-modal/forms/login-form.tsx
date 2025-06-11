@@ -33,7 +33,27 @@ export const LoginForm: React.FC<Props> = ({ onClose, onLoginSuccess }) => {
       });
 
       if (!resp?.ok) {
-        throw new Error(resp?.error || 'Login failed');
+        switch (resp?.error) {
+          case 'Invalid email':
+            toast.error('Неверный формат электронной почты', { icon: '❌' });
+            break;
+          case 'Invalid credentials':
+            toast.error('Неверный email или пароль', { icon: '❌' });
+            break;
+          case 'Account locked':
+            toast.error('Ваш аккаунт заблокирован. Обратитесь в поддержку.', {
+              icon: '⚠️',
+            });
+            break;
+          case 'Server error':
+            toast.error('Ошибка сервера. Попробуйте позже.', { icon: '⚠️' });
+            break;
+          default:
+            toast.error('Не удалось войти в аккаунт. Проверьте данные.', {
+              icon: '❌',
+            });
+        }
+        return; // Прерываем выполнение, если ошибка
       }
 
       await update();
@@ -53,7 +73,7 @@ export const LoginForm: React.FC<Props> = ({ onClose, onLoginSuccess }) => {
       router.refresh();
     } catch (error) {
       console.error('Error [LOGIN]', error);
-      toast.error('Не удалось войти в аккаунт', {
+      toast.error('Произошла непредвиденная ошибка. Попробуйте снова.', {
         icon: '❌',
       });
     }

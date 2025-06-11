@@ -17,5 +17,6 @@ export default async function AdminPage() {
   if (!user || user.role !== 'Admin') {
     return redirect('/not-auth');
   }
+
   return <AdminPanel />;
 }

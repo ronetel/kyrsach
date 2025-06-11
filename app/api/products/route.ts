@@ -30,10 +30,9 @@ export async function GET() {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-
     if (!session?.user?.id || session.user.role !== 'Admin') {
       return NextResponse.json(
         { error: 'Доступ запрещён. Требуются права администратора.' },
@@ -44,9 +43,9 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, description, imageUrl, categoryId, sizes } = body;
 
-    if (!name || !categoryId || !sizes || !Array.isArray(sizes)) {
+    if (!name || !categoryId) {
       return NextResponse.json(
-        { error: 'Необходимо указать название, категорию и размеры с ценами.' },
+        { error: 'Название и ID категории обязательны.' },
         { status: 400 }
       );
     }
@@ -56,19 +55,21 @@ export async function POST(request: Request) {
         name,
         description,
         imageUrl,
-        categoryId: Number(categoryId),
+        categoryId,
       },
     });
 
-    const productItems = await prisma.productItems.createMany({
-      data: sizes.map((size: { sizeId: number; price: number }) => ({
-        Product_ID: newProduct.ID_Product,
-        Size_ID: size.sizeId,
-        Price: Number(size.price),
-      })),
-    });
+    if (sizes && sizes.length > 0) {
+      const productItems = await prisma.productItems.createMany({
+        data: sizes.map((size: { sizeId: number | null; price: number }) => ({
+          Product_ID: newProduct.ID_Product,
+          Size_ID: size.sizeId !== null ? Number(size.sizeId) : null, // Преобразуем в число или null
+          Price: size.price,
+        })),
+      });
+    }
 
-    return NextResponse.json({ ...newProduct, productItems }, { status: 201 });
+    return NextResponse.json(newProduct, { status: 201 });
   } catch (error) {
     console.error('[PRODUCTS_POST] Ошибка:', error);
     return NextResponse.json({ error: 'Ошибка сервера' }, { status: 500 });
