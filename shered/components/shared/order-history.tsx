@@ -2,14 +2,16 @@
 
 import { OrderDTO } from '@/shered/services/dto/order.dto';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 interface Props {
   className?: string;
 }
 
-export const OrderHistory = () => {
+export const OrderHistory = ({ className }: Props) => {
   const [orders, setOrders] = useState<OrderDTO[]>([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -22,6 +24,9 @@ export const OrderHistory = () => {
 
         const data = await response.json();
         setOrders(data);
+      } catch (error) {
+        console.error('Ошибка загрузки заказов:', error);
+        toast.error('Не удалось загрузить историю заказов', { icon: '❌' });
       } finally {
         setLoading(false);
       }
@@ -53,7 +58,7 @@ export const OrderHistory = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${className}`}>
       {orders.map((order) => (
         <div key={order.id} className="border rounded-lg p-4 shadow-sm">
           <div className="flex justify-between items-start">
@@ -88,19 +93,21 @@ export const OrderHistory = () => {
                 <div className="flex-1">
                   <div className="flex justify-between">
                     <p className="font-medium">
-                      {item.productItem.Product.name}
+                      {item.productItem?.Product_ID
+                        ? item.productItem.Product.name
+                        : 'Неизвестный продукт'}
                     </p>
                     <p className="font-medium">
-                      {item.quantity * item.productItem.Price} ₽
+                      {item.quantity * (item.productItem?.Price || 0)} ₽
                     </p>
                   </div>
-                  {item.productItem.Size && (
+                  {item.productItem?.Size && (
                     <p className="text-sm text-gray-400">
-                      Размер: {item.productItem.Size.Size_name}
+                      Размер: {item.productItem?.Size.Size_name}
                     </p>
                   )}
                   <p className="text-sm text-gray-400">
-                    {item.quantity} × {item.productItem.Price} ₽
+                    {item.quantity} × {item.productItem?.Price || 0} ₽
                   </p>
                 </div>
               </div>
